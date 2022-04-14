@@ -8,6 +8,10 @@ namespace SignUp
     {      
         std::string nickname="None";
         std::string id_number="None";
+        Proflie()
+        {
+
+        }
         Proflie(std::string Nick_name,std::string idnumber)
         {   
             nickname=Nick_name;
@@ -15,6 +19,8 @@ namespace SignUp
         }
         friend int Createaccount();
         friend Proflie* fillprofile();
+        friend int logged_in(int account_id);
+
         // friend class Account;
         public:
         void print()//function to print data
@@ -41,6 +47,7 @@ namespace SignUp
 
         friend int Createaccount();
         friend int login();
+        friend int logged_in(int account_id);
         // public:
         void get_profile()
         {   Id_profile->print();
@@ -60,6 +67,7 @@ namespace SignUp
         friend Proflie* fillprofile();
         friend int login();
         friend void show_profile(int list_id);
+        friend int logged_in(int account_id);
     }cred_list;
 
     //function responsibe for filling profile
@@ -70,7 +78,7 @@ namespace SignUp
         std::cout<<"enter the user id_number(enter None or 0 to skip now) : ";
         std::cin>>id_number;
         if (id_number=="0"||nickname=="0"||id_number=="None"||nickname=="None")
-                return nullptr;
+                return (new Proflie());
         return (new Proflie(nickname,id_number));
     }
 
@@ -123,29 +131,71 @@ namespace SignUp
         else
         {
             std::cout<<"cred not correct\n";
-            return 0;
+            return 420;
         }
     // std::cout<<"wrong Creds\n"<<Username<<"or password ***************";
     // return 0;
     }
 
+    int logged_in(int account_id)
+    {   
+        if(account_id!=420 && cred_list.account_index!=0)
+        while (1)
+        {
+            int option=1;
+            std::cout<<"1 .view details 2. for edit details 3.exit: ";
+            std::cin>>option;
+            if (option==1)
+                cred_list.list[account_id]->get_profile();
+            else if(option==2)
+            {   std::cout<<"to change 1.usernanme 2.id 3.both: \n";
+                std::cin>>option;
+                std::string value="";
+                if (option==1)//for user name only
+                    {   std::cout<<"enter the new nick name: ";
+                        std::cin>>value;
+                    cred_list.list[account_id]->Id_profile->nickname=value;
+                    }
+                else if (option==2)//for user name only
+                    {   std::cout<<"enter the new id: ";
+                        std::cin>>value;
+                    cred_list.list[account_id]->Id_profile->id_number=value;
+                    }
+                else if(option==3)
+                {  
+                    std::cout<<"enter the new Nick name: ";
+                    std::cin>>value;
+                    cred_list.list[account_id]->Id_profile->nickname=value;
+
+                    std::cout<<"enter the new id: ";
+                    std::cin>>value;
+                    cred_list.list[account_id]->Id_profile->id_number=value;
+                }
+            }
+            else if(option==3)
+                break;
+
+        }
+    return 0;
+    }
+
 }
+
 
 int main()
 {   
     while (1)
     {   int option=0;
-        std::cout<<"1 signup\n2.login\n";
+        std::cout<<"1 signup\n2.login\n3.exit\n";
         std::cin>>option;
         if(option==1)
             SignUp::Createaccount();
         if(option ==2)
             {
-               SignUp::login();
-               //make namespaces for login to show & set data
-
+               SignUp::logged_in(SignUp::login());//make namespaces for login to show & set data
             }
+         if(option ==3)
+            break;
     }
-    
     return 0;
 }
