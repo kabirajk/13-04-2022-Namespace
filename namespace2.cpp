@@ -90,7 +90,7 @@ namespace SignUp
                 return 0;
             }
         cred_list.list[cred_list.account_index]= new Account();
-        std::cout<<"account created";
+        std::cout<<"account created\n";
          cred_list.list[cred_list.account_index]->Id_profile=fillprofile();
        // Proflie * my=fillprofile();    std::cout<<my->nickname;// std::cout<<cred_list.list[cred_list.account_index]->Id_profile->id_number;
         std::cout<<(cred_list.list[cred_list.account_index]->Id_profile==nullptr ? "profile not complitted\n":"completed\n");
