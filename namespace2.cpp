@@ -6,8 +6,8 @@ namespace SignUp
 
     class Proflie
     {      
-        std::string nickname;
-        std::string id_number;
+        std::string nickname="None";
+        std::string id_number="None";
         Proflie(std::string Nick_name,std::string idnumber)
         {   
             nickname=Nick_name;
@@ -27,8 +27,8 @@ namespace SignUp
     //class that holds the accounts whole data
         class Account
     {
-        std::string username;
-        std::string password;
+        std::string username="None";
+        std::string password="None";
         //profile//ptr=
         Proflie * Id_profile=nullptr;
 
@@ -53,7 +53,7 @@ namespace SignUp
     class 
     {
         // Acc_list[]//ptr;
-        Account * list[10];
+        Account * list[10]={0};
         int account_index=0;
 
         friend int Createaccount();
@@ -64,7 +64,7 @@ namespace SignUp
 
     //function responsibe for filling profile
     Proflie* fillprofile()
-    {   std::string nickname="",id_number="";
+    {   std::string nickname="None",id_number="None";
         std::cout<<"enter the Nick name (enter None or 0 to skip now)";
         std::cin>>nickname;
         std::cout<<"enter the user id_number(enter None or 0 to skip now) : ";
@@ -96,15 +96,26 @@ namespace SignUp
     {
         std::string Username,password;
         std::cout<<"#====== LOGIN ======#\n";
-        std::cout<<"enter the user name";
+        std::cout<<"enter the user name: ";
         std::cin>>Username;
-        std::cout<<"enter the password";
+        std::cout<<"enter the password: ";
         std::cin>>password;
         int i=0;
-        while(i<10 && (cred_list.list[i])->username!=Username)
+        // std::cout<<"print:"<<(cred_list.list[i]==0);
+
+        while(i<=cred_list.account_index && cred_list.list[i]!=0)
+        {
+            if(cred_list.list[i]->username==Username)
+                break;
+
             i++;
-        if (i==10) return 0;
-        if(cred_list.list[i]->password==password)
+        }
+
+        if (i==10||cred_list.list[i]==0) 
+            {   std::cout<<"\r<==== username not found please create a account ====>\n";
+                return 0;
+            }
+        else if(cred_list.list[i]->password==password)
         {
             std::cout<<"logged in\n";
             return i;
@@ -114,7 +125,8 @@ namespace SignUp
             std::cout<<"cred not correct\n";
             return 0;
         }
-    return 0;
+    // std::cout<<"wrong Creds\n"<<Username<<"or password ***************";
+    // return 0;
     }
 
 }
