@@ -31,6 +31,7 @@ namespace SignUp
             std::cin>>password;
         }
         friend int Createaccount();
+        friend int login();
     };
     //credlist anonymus class object tht holds the details of credentials 
     class 
@@ -40,6 +41,7 @@ namespace SignUp
         int account_index=0;
         friend int Createaccount();
         friend Proflie* fillprofile();
+        friend int login();
     }cred_list;
 
     //function responsibe for filling profile
@@ -68,23 +70,35 @@ namespace SignUp
         cred_list.account_index+=1;
         return 0;
     }
-    void login()
+    int login()
     {
         std::string Username,password;
-        
+        std::cout<<"#====== LOGIN ======#\n";
         std::cout<<"enter the user name";
         std::cin>>Username;
         std::cout<<"enter the password";
         std::cin>>password;
-        // for(int i=0);
+        int i=0;
+        while(i<10 && (cred_list.list[i])->username!=Username)
+            i++;
+        if (i==10) return 0;
+        if(cred_list.list[i]->password==password)
+        {
+            std::cout<<"logged in\n";
+        }
+        else
+        {
+            std::cout<<"cred not correct\n";
+            return 0;
+        }
+    return 0;
     }
 
 }
 
 namespace LogIn
-{ using namespace std;
-
-
+{ 
+    
 
 }
 
